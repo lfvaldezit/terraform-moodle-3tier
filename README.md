@@ -1,0 +1,1 @@
+<img width="700" height="421" alt="image" src="https://github.com/lfvaldezit/terraform-moodle-3tier/blob/main/image.png" />
