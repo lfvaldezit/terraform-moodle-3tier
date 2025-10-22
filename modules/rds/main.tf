@@ -15,6 +15,7 @@ resource "aws_db_instance" "this" {
 
 
 resource "aws_db_subnet_group" "this" {
+  name = "${var.name}-sub-grp"
   subnet_ids = var.subnet_id
-  tags = merge({Name = "${var.name}"}, var.common_tags)
+  tags = merge({Name = "${var.name}-sub-grp"}, var.common_tags)
 }
