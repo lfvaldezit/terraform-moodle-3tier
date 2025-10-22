@@ -3,6 +3,7 @@
 
 *.log
 
+*tfstate.*
 *tfstate
 *tfstate.backup
 *tfvars.json

@@ -1,9 +1,9 @@
-# --------------- VPC ----------------- #
-
 variable "name" {
   description = "Name for all resources"
   type        = string
 }
+
+# --------------- VPC ----------------- #
 
 variable "cidr_block" {
   description = "CIDR block for the VPC"
@@ -91,10 +91,6 @@ variable "health_check_path" {
   type = string
 }
 
-variable "redis_dns_name" {
-  type    = string
-  default = "value"
-}
 #--------------- CloudFlare --------------- #
 
 variable "api_token" {
@@ -121,5 +117,19 @@ variable "domain_name" {
 }
 
 variable "record_name" {
+  type = string
+}
+
+#--------------- Moodle --------------- #
+
+variable "admin_user" {
+  type = string
+}
+
+variable "admin_pass" {
+  type = string
+}
+
+variable "admin_email" {
   type = string
 }
