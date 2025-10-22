@@ -32,10 +32,10 @@ variable "create_alb" {
     default     = false
 }
 
-# variable "iam_instance_profile" {
-#     description = "IAM instance profile for the instance"
-#     type = string
-# }
+variable "iam_instance_profile" {
+    description = "IAM instance profile for the instance"
+    type = string
+}
 
 variable "user_data" {
     description = "User data for the instance"
