@@ -1,6 +1,7 @@
 
 resource "random_string" "this" {
-  length  = 8
+  for_each = aws_subnet.public
+  length  = 10
   upper   = true
   lower   = true
   special = false
@@ -44,8 +45,9 @@ resource "aws_subnet" "data" {
 # --------------- Route Table ----------------- #
 
 resource "aws_route_table" "public" {
+  for_each = aws_subnet.public
   vpc_id = aws_vpc.this.id
-  tags = merge({Name = "${var.name}-public-rt"}, var.common_tags)
+  tags = merge({Name = "${var.name}-public-rt-${random_string.this[each.key].result}"}, var.common_tags)
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.this.id
@@ -55,7 +57,7 @@ resource "aws_route_table" "public" {
 resource "aws_route_table_association" "public" {
   for_each = aws_subnet.public
   subnet_id      = each.value.id
-  route_table_id = aws_route_table.public.id
+  route_table_id = aws_route_table.public[each.key].id
 }
 
 resource "aws_route_table" "app" {
@@ -89,13 +91,13 @@ resource "aws_internet_gateway" "this" {
 
 # --------------- NGW ----------------- #
 
-# resource "aws_eip" "this" {
-#   depends_on = [ aws_internet_gateway.this ]
-#   for_each = {for subnet in var.public_subnets : subnet.name => subnet}
-#   region = var.region
-#   domain = "vpc"
-#   tags = merge({Name = "${var.name}-eip-${random_string.this.result}"}, var.common_tags)
-# }
+resource "aws_eip" "this" {
+  depends_on = [ aws_internet_gateway.this ]
+  for_each = {for subnet in var.public_subnets : subnet.name => subnet}
+  region = var.region
+  domain = "vpc"
+  tags = merge({Name = "${var.name}-eip-${random_string.this[each.key].result}"}, var.common_tags)
+}
 
 # resource "aws_nat_gateway" "this" {
 #   for_each = {for subnet in var.public_subnets : subnet.name => subnet}
