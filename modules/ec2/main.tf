@@ -50,4 +50,8 @@ resource "aws_instance" "this" {
     iam_instance_profile = aws_iam_instance_profile.this.name
     user_data = var.user_data
     associate_public_ip_address = true
+    metadata_options {
+      http_endpoint = "enabled"
+      http_tokens = "optional"
+    }
 }
