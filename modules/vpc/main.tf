@@ -1,13 +1,4 @@
 
-resource "random_string" "this" {
-  for_each = aws_subnet.public
-  length  = 10
-  upper   = true
-  lower   = true
-  special = false
-  numeric = true
-}
-
 # --------------- VPC & Subnet ----------------- #
 
 resource "aws_vpc" "this" {
@@ -47,7 +38,7 @@ resource "aws_subnet" "data" {
 resource "aws_route_table" "public" {
   for_each = aws_subnet.public
   vpc_id = aws_vpc.this.id
-  tags = merge({Name = "${var.name}-public-rt-${random_string.this[each.key].result}"}, var.common_tags)
+  tags = merge({Name = "${var.name}-public-rt}"}, var.common_tags)
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.this.id
@@ -61,14 +52,19 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table" "app" {
+  for_each = aws_subnet.app
   vpc_id = aws_vpc.this.id
   tags = merge({Name = "${var.name}-app-rt"}, var.common_tags)
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.this[each.key].id
+  }
 }
 
 resource "aws_route_table_association" "app" {
   for_each = aws_subnet.app
-  subnet_id      = each.value.id
-  route_table_id = aws_route_table.app.id
+  subnet_id = each.value.id
+  route_table_id = aws_route_table.app[each.key].id
 }
 
 resource "aws_route_table" "data" {
@@ -92,18 +88,16 @@ resource "aws_internet_gateway" "this" {
 # --------------- NGW ----------------- #
 
 resource "aws_eip" "this" {
-  depends_on = [ aws_internet_gateway.this ]
-  for_each = {for subnet in var.public_subnets : subnet.name => subnet}
+  for_each = aws_subnet.app
   region = var.region
   domain = "vpc"
-  tags = merge({Name = "${var.name}-eip-${random_string.this[each.key].result}"}, var.common_tags)
+  tags = merge({Name = "${var.name}-eip-${each.value.availability_zone}"}, var.common_tags)
 }
 
-# resource "aws_nat_gateway" "this" {
-#   for_each = {for subnet in var.public_subnets : subnet.name => subnet}
-#   allocation_id = aws_eip.this[each.key].id
-#   subnet_id     = aws_subnet.public[each.key].id
-#   connectivity_type = "public"
-#   tags = merge({Name = "${var.name}-ngw-a"}, var.common_tags)
-#   depends_on = [aws_eip.this]
-# }
+resource "aws_nat_gateway" "this" {
+  for_each = aws_subnet.app
+  allocation_id = aws_eip.this[each.key].id
+  subnet_id = each.value.id
+  connectivity_type = "public"
+  tags = merge({Name = "${var.name}-ngw-${each.value.availability_zone}"}, var.common_tags)
+}
