@@ -1,9 +1,3 @@
-# --------------- AMI  ----------------- #
-
-variable "source_instance_id" {
-    type = string
-}
-
 # --------------- Launch Template  ----------------- #
 
 variable "name" {

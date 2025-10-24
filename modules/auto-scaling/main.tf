@@ -1,17 +1,3 @@
-resource "random_string" "this" {
-  length  = 8
-  upper   = true
-  lower   = true
-  special = false
-  numeric = true
-}
-
-# --------------- AMI ----------------- #
-
-resource "aws_ami_from_instance" "example" {
-  name               = "${var.name}-AMI"
-  source_instance_id = var.source_instance_id 
-}
 
 # --------------- Launch Template ----------------- #
 
