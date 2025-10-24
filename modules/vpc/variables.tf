@@ -43,3 +43,7 @@ variable "data_subnets" {
 variable "region" {
   type = string
 }
+
+variable "endpoint_security_group_ids" {
+  type = set(string)
+}
