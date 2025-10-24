@@ -12,9 +12,9 @@
 * **EC2 Instances**: VM used to generate AMI for the moodle application.
 * **Application Load Balancer (ALB)**: Distributes incoming web traffic across multiple EC2 instances.
 * **Auto Scaling Group (ASG)**: Automatically adjusts the number of EC2 instances based on demand.
-* **Elastic File Systems**: Scalable shared storage for moodledata.
+* **Amazon Elastic File Systems**: Scalable shared storage for moodledata.
 * **Relational Database**: Managed MySQL/PostgreSQL database for Moodle data.
-* **Elasticache (Redis)**: Stores moodle sessions and applications caches.
+* **Amazon ElastiCache (Redis)**: Stores moodle sessions and applications caches.
 * **AMI**: Pre-configured image for consistent Moodle deployments.
 * **AWS Systems Manager Parameter Store**: It manages Moodle’s configuration parameters.
 * **AWS Certificate Manager**: Centralized and encrypted configuration storage.
