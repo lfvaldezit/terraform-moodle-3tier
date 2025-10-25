@@ -61,4 +61,8 @@
 - From the EC2 console, select your instance, go to `Actions → Images and templates → Create image`.
 - Copy the AMI ID generated and paste it into the `ami_id_ASG` variable within your terraform.tfvars file — this AMI will be used later in `Phase 2`.
 
+### PHASE 2
 
+- Open the root `main.tf` file.
+- Uncomment the entire `Phase 2` section and  out the `module "ec2"` block that is no longer needed
+- Run `terraform apply` to deploy the changes.
