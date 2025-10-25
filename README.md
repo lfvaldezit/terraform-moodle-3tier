@@ -59,10 +59,11 @@
 - Use the following format for the Redis connection: `redis_url:6379`.
 - More about [Redis cache store](https://docs.moodle.org/501/en/Redis_cache_store).
 - From the EC2 console, select your instance, go to `Actions → Images and templates → Create image`.
-- Copy the AMI ID generated and paste it into the `ami_id_ASG` variable within your terraform.tfvars file — this AMI will be used later in `Phase 2`.
+- Copy the AMI ID generated and paste it into the `ami_id_ASG` variable within your terraform.example.tfvars file — this AMI will be used later in `Phase 2`.
 
 ### PHASE 2
 
+- Open the terraform.example.tfvars file and complete all the `Phase 2` variables according to your environment configuration
 - Open the root `main.tf` file.
 - Uncomment the entire `Phase 2` section and  out the `module "ec2"` block that is no longer needed
 - Run `terraform init --upgrade`
