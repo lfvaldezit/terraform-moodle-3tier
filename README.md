@@ -69,11 +69,6 @@
 - Run `terraform init --upgrade`
 - Run `terraform apply` to deploy the changes.
 
-## ✅ Outputs
-
-- `RDS-ENDPOINT`: The hostname of the RDS instance.
-- `REDIS-ENDPOINT`: The hostname of the REDIS primary node.
-
 ## 🧪 Testing
 
 - Select the single instance in the `EC2 Auto Scaling Group (ASG)`.
@@ -83,3 +78,7 @@
 ```bash
 stress -c 2 -v -t 3000
 ```
+## ✅ Outputs
+
+- `RDS-ENDPOINT`: The hostname of the RDS instance.
+- `REDIS-ENDPOINT`: The hostname of the REDIS primary node.
