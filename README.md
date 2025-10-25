@@ -65,4 +65,5 @@
 
 - Open the root `main.tf` file.
 - Uncomment the entire `Phase 2` section and  out the `module "ec2"` block that is no longer needed
+- Run `terraform init --upgrade`
 - Run `terraform apply` to deploy the changes.
