@@ -44,7 +44,7 @@ health_check_path = "/moodle/health.html"
 
 # --------------- Cloudflare ----------------- #
 
-domain_name = "lfvaldez-it.link"
+domain_name = "example.com"
 record_name = "@"
-api_token   = "REvyDR62UVJv0d7IauAmqb7N5JTcYgvpfLvXgA5x"
-zone_id     = "22c6ed31f5e2112cfc10796dd2cacdcc"
+api_token   = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+zone_id     = "xxxxxxxxxxxxxxxxxxxxxxxxxx"
