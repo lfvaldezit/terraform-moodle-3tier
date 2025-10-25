@@ -4,7 +4,7 @@
 
 <img width="800" height="500" alt="image" src="https://raw.githubusercontent.com/lfvaldezit/terraform-moodle-3tier/main/image.png" />
 
-## 🌐 Stack Overview
+## 📦 Stack Overview
 
 * **VPC**: Isolated network for deploying AWS resources.
 * **NAT Gateway**: Enables outbound Internet access for private subnets securely.
@@ -48,7 +48,7 @@
 
 ```
 
-## ⚙️ Deployment
+## 🚀 Deployment
 
 ### PHASE 1
 
@@ -73,3 +73,13 @@
 
 - `RDS-ENDPOINT`: The hostname of the RDS instance.
 - `REDIS-ENDPOINT`: The hostname of the REDIS primary node.
+
+## 🧪 Testing
+
+- Select the single instance in the `EC2 Auto Scaling Group (ASG)`.
+- Connect to it using AWS `Session Manager`.
+- Run the following `stress command` — a utility that generates artificial system load to test performance and scaling behavior. The Auto Scaling Group will detect the high CPU utilization and automatically launch a new EC2 instance based on the launch template.
+
+```bash
+stress -c 2 -v -t 3000
+```
