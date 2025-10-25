@@ -46,12 +46,12 @@ resource "aws_autoscaling_group" "this" {
 # --------------- IAM ROLE ----------------- #
 
 resource "aws_iam_instance_profile" "this" {
-  name = "ec2-inst-profile-${random_string.this.result}"
+  name = "ec2-inst-profile"
   role = aws_iam_role.this.name
 }
 
 resource "aws_iam_role" "this" {
-  name               = "ec2-role-${random_string.this.result}"
+  name               = "ec2-role"
   assume_role_policy = <<EOF
     {
     "Version": "2012-10-17",
