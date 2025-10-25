@@ -1,4 +1,6 @@
 
+### PHASE 1
+
 name = "moodle-test"
 
 # --------------- VPC ----------------- #
@@ -36,6 +38,8 @@ admin_email = "admin@example.com"
 # --------------- ELASTICACHE ----------------- #
 
 node_type = "cache.t2.micro"
+
+### PHASE 2
 
 # --------------- ASG ----------------- #
 
