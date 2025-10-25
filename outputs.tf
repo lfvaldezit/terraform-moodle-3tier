@@ -3,5 +3,5 @@ output "RDS-ENDPOINT" {
 }
 
 output "REDIS-ENDPOINT" {
-  value = module.redis.cache_nodes
+  value = module.redis-cache.primary_endpoint_address
 }

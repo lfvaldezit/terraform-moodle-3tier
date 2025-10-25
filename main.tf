@@ -66,8 +66,8 @@ module "redis" {
   source     = "./modules/parameter-store"
   param_name = "/${var.name}/REDIS"
   type       = "String"
-  value = module.redis-cache.cache_nodes[0].address
-  #value      = module.redis-cache.primary_endpoint_address
+  #value = module.redis-cache.cache_nodes[0].address
+  value      = module.redis-cache.primary_endpoint_address
 }
 
 module "vpc" {
