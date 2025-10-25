@@ -2,7 +2,7 @@
 
 ## 🏗️ Architecture
 
-<img width="800" height="450" alt="image" src="https://github.com/lfvaldezit/terraform-moodle-3tier/blob/main/image.png" />
+<img width="750" height="450" alt="image" src="https://github.com/lfvaldezit/terraform-moodle-3tier/blob/main/image.png" />
 
 ## 🌐 Stack Overview
 
