@@ -68,3 +68,8 @@
 - Uncomment the entire `Phase 2` section and comment out the `module "ec2"` block that is no longer needed
 - Run `terraform init --upgrade`
 - Run `terraform apply` to deploy the changes.
+
+## ✅ Outputs
+
+- `RDS-ENDPOINT`: The hostname of the RDS instance.
+- `REDIS-ENDPOINT`: The hostname of the REDIS primary node.
