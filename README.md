@@ -20,3 +20,30 @@
 * **AWS Certificate Manager**: Centralized and encrypted configuration storage.
 * **CloudFlare**: Manage DNS records for the domain.
 
+## 📁 Project Structure
+
+```
+
+├── .gitignore
+├── image.png              
+├── locals.tf       
+├── main.tf
+├── outputs.tf              
+├── providers.tf
+├── README.md
+├── terraform.example.tfvars 
+├── variables.tf
+├── version.tf                    
+└── modules/
+    └── auto-scaling/     
+    └── cloudflare/     
+    └── ec2/     
+    └── efs/     
+    └── elasticache/
+    └── load-balancer/
+    └── parameter-store/
+    └── rds/
+    └── security-group/
+    └── vpc/     
+    
+```
