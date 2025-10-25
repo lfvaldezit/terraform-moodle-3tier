@@ -65,6 +65,6 @@
 
 - Open the terraform.example.tfvars file and complete all the `Phase 2` variables according to your environment configuration
 - Open the root `main.tf` file.
-- Uncomment the entire `Phase 2` section and  out the `module "ec2"` block that is no longer needed
+- Uncomment the entire `Phase 2` section and comment out the `module "ec2"` block that is no longer needed
 - Run `terraform init --upgrade`
 - Run `terraform apply` to deploy the changes.
