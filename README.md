@@ -50,14 +50,14 @@
 
 ## ⚙️ Deployment
 
-# PHASE 1
+### PHASE 1
 
 - In the first phase of the `Moodle 3-tier architecture design`, we pre-provision a single EC2 instance using a user data script to automate the configuration process.
 - Once the pre-provisioned EC2 instance is running, access the Moodle site at http://<PUBLIC_IP>/moodle to complete the installation.
 - Log in. Navigate to `Site Administration → Plugins → Caching → Configuration`.
 - Under ` Installed cache stores → Redis, click Add instance`.
 - Use the following format for the Redis connection: `redis_url:6379`.
-- More about. [Redis cache store](https://docs.moodle.org/501/en/Redis_cache_store).
+- More about [Redis cache store](https://docs.moodle.org/501/en/Redis_cache_store).
 - From the EC2 console, select your instance, go to `Actions → Images and templates → Create image`.
 - Copy the AMI ID generated and paste it into the `ami_id_ASG` variable within your terraform.tfvars file — this AMI will be used later in `Phase 2`.
 
