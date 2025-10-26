@@ -36,7 +36,7 @@ resource "aws_autoscaling_group" "this" {
       value = "${var.name}-ec2-asg"
       propagate_at_launch = true
     }
-
+  
     launch_template {
         id = aws_launch_template.this.id
         version = aws_launch_template.this.latest_version
@@ -46,12 +46,12 @@ resource "aws_autoscaling_group" "this" {
 # --------------- IAM ROLE ----------------- #
 
 resource "aws_iam_instance_profile" "this" {
-  name = "ec2-inst-profile"
+  name = "${var.name}-inst-profile"
   role = aws_iam_role.this.name
 }
 
 resource "aws_iam_role" "this" {
-  name               = "ec2-role"
+  name               = "${var.name}-role"
   assume_role_policy = <<EOF
     {
     "Version": "2012-10-17",
@@ -106,59 +106,4 @@ resource "aws_cloudwatch_metric_alarm" "this" {
     AutoScalingGroupName = aws_autoscaling_group.this.name
   }
   alarm_actions = [aws_autoscaling_policy.this[count.index].arn]
-  #alarm_actions = [aws_autoscaling_policy.scale_up.arn]
 }
-
-# resource "aws_autoscaling_policy" "scale_up" {
-#   name                   = "simple-scale-up"
-#   policy_type            = "SimpleScaling"
-#   adjustment_type        = "ChangeInCapacity"
-#   autoscaling_group_name = aws_autoscaling_group.this.name
-#   #scaling_adjustment = "1"
-#   scaling_adjustment = var.scaling_adjustment_up
-#   cooldown = 300
-# }
-
-# resource "aws_autoscaling_policy" "scale_down" {
-#   name                   = "simple-scale-down"
-#   policy_type            = "SimpleScaling"
-#   adjustment_type        = "ChangeInCapacity"
-#   autoscaling_group_name = aws_autoscaling_group.this.name
-#   #scaling_adjustment = "-1"
-#   scaling_adjustment = var.scaling_adjustment_down
-#   cooldown = 300
-# }
-
-# resource "aws_cloudwatch_metric_alarm" "cpu_util_up" {
-#   alarm_name          = "cpu_util_up_${var.cpu_util_threshold_up}"
-#   comparison_operator = "GreaterThanThreshold"
-#   evaluation_periods  = 2
-#   metric_name         = "CPUUtilization"
-#   namespace           = "AWS/EC2"
-#   period              = 300
-#   statistic           = "Average"
-#   threshold           = var.cpu_util_threshold_up
-#   alarm_description   = "Trigger scale out when CPU > ${var.cpu_util_threshold_up}%"
-#   dimensions = {
-#     AutoScalingGroupName = aws_autoscaling_group.this.name
-#   }
-
-#   alarm_actions = [aws_autoscaling_policy.scale_up.arn]
-# }
-
-# resource "aws_cloudwatch_metric_alarm" "cpu_util_down" {
-#   alarm_name          = "cpu_util_down_${var.cpu_util_threshold_down}"
-#   comparison_operator = "LessThanThreshold"
-#   evaluation_periods  = 2
-#   metric_name         = "CPUUtilization"
-#   namespace           = "AWS/EC2"
-#   period              = 300
-#   statistic           = "Average"
-#   threshold           = "${var.cpu_util_threshold_down}"
-#   alarm_description   = "Trigger scale out when CPU < ${var.cpu_util_threshold_down}%"
-#   dimensions = {
-#     AutoScalingGroupName = aws_autoscaling_group.this.name
-#   }
-
-#   alarm_actions = [aws_autoscaling_policy.scale_down.arn]
-# }

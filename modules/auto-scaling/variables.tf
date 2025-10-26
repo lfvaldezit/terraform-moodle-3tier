@@ -31,6 +31,7 @@ variable "common_tags" {
 }
 
 variable "subnets_id" {
+    description = "Set of subnet IDs where EC2 instances (from ASG) will be deployed"
   type = set(string)
 }
 
