@@ -79,7 +79,7 @@ resource "aws_iam_role_policy_attachment" "efs-full-access" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess"
 }
 
-# --------------- Auto Scaling Simple Policies----------------- #
+# --------------- Simple Auto Scaling Policy----------------- #
 
 resource "aws_autoscaling_policy" "this" {
   count = length(var.autoscaling_policy)
