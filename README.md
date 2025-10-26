@@ -4,6 +4,7 @@
 
 <img width="800" height="500" alt="image" src="https://raw.githubusercontent.com/lfvaldezit/terraform-moodle-3tier/main/image.png" />
 
+
 * **VPC**: Isolated network for deploying AWS resources.
 * **NAT Gateway**: Enables outbound Internet access for private subnets securely.
 * **Internet Gateway**: Connects public subnets to the Internet.
