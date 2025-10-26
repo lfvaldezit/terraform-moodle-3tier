@@ -45,6 +45,15 @@ node_type = "cache.t2.micro"
 
 ami_id_ASG        = "ami-xxxxxxxxxxxxxxxxx"
 health_check_path = "/moodle/health.html"
+min_size          = 1
+max_size          = 2
+desired_capacity  = 1
+
+cpu_util_threshold_up = 75
+scaling_adjustment_up = 1
+
+cpu_util_threshold_down = 25
+scaling_adjustment_down = -1
 
 # --------------- Cloudflare ----------------- #
 
