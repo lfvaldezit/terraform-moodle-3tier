@@ -1,7 +1,7 @@
 # --------------- Launch Template  ----------------- #
 
 variable "name" {
-    description = "Name for all resources"
+    description = "Base name prefix used to label all created resources "
     type = string
 }
 
@@ -37,27 +37,51 @@ variable "subnets_id" {
 # --------------- Auto Scaling Group  ----------------- #
 
 variable "min_size" {
+    description = "The minimum number of instances in the Auto Scaling Group"
     type = number
     default = 1
 }
 
 variable "max_size" {
+    description = "The maximum number of instances in the Auto Scaling Group"
     type = number
-    default = 3
+    default = 2
 }
 
 variable "desired_capacity" {
+    description = "The initial number of instances that the Auto Scaling Group should maintain"
     type = number
     default = 1
 }
 
 variable "target_group_id" {
+    description = "The ARN or ID of the Target Group"
     type = string
+}
+variable "autoscaling_policy" {
+    description = "List of Auto Scaling policies that define how to adjust capacity (scale in/out) based on metrics"
+    type = list(object({
+      name = string
+      scaling_adjustment = number
+      cooldown = number
+
+    }))
 }
 
 # --------------- Target Group  ----------------- #
 
 variable "vpc_id" {
+    description = "The VPC ID where the Target Group and EC2 instances will be created"
   type = string
 }
 
+# --------------- CloudWatch Alarm  ----------------- #
+
+variable "cloudwatch_metric_alarm" {
+    description = "List of CloudWatch alarms to monitor metrics and trigger Auto Scaling actions"
+    type = list(object({
+      name = string
+      threshold = number
+      alarm_description = string 
+    }))
+}

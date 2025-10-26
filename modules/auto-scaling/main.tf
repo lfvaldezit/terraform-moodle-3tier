@@ -81,54 +81,84 @@ resource "aws_iam_role_policy_attachment" "efs-full-access" {
 
 # --------------- Auto Scaling Simple Policies----------------- #
 
-resource "aws_autoscaling_policy" "scale_up" {
-  name                   = "simple-scale-up-75"
+resource "aws_autoscaling_policy" "this" {
+  count = length(var.autoscaling_policy)
+  name                   = var.autoscaling_policy[count.index].name
   policy_type            = "SimpleScaling"
   adjustment_type        = "ChangeInCapacity"
   autoscaling_group_name = aws_autoscaling_group.this.name
-  scaling_adjustment = "1"
-  cooldown = 300
+  scaling_adjustment = var.autoscaling_policy[count.index].scaling_adjustment
+  cooldown = var.autoscaling_policy[count.index].cooldown
 }
 
-resource "aws_autoscaling_policy" "scale_down" {
-  name                   = "simple-scale-down-35"
-  policy_type            = "SimpleScaling"
-  adjustment_type        = "ChangeInCapacity"
-  autoscaling_group_name = aws_autoscaling_group.this.name
-  scaling_adjustment = "-1"
-  cooldown = 300
-}
-
-resource "aws_cloudwatch_metric_alarm" "cpu_util_up_75" {
-  alarm_name          = "cpu_util_up_75"
+resource "aws_cloudwatch_metric_alarm" "this" {
+  count = length(var.cloudwatch_metric_alarm)
+  alarm_name          = var.cloudwatch_metric_alarm[count.index].name
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
   period              = 300
   statistic           = "Average"
-  threshold           = 75
-  alarm_description   = "Trigger scale out when CPU > 75%"
+  threshold           = var.cloudwatch_metric_alarm[count.index].threshold
+  alarm_description   = var.cloudwatch_metric_alarm[count.index].alarm_description
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.this.name
   }
-
-  alarm_actions = [aws_autoscaling_policy.scale_up.arn]
+  alarm_actions = [aws_autoscaling_policy.this[count.index].arn]
+  #alarm_actions = [aws_autoscaling_policy.scale_up.arn]
 }
 
-resource "aws_cloudwatch_metric_alarm" "cpu_util_down_35" {
-  alarm_name          = "cpu_util_down_35"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods  = 2
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
-  period              = 300
-  statistic           = "Average"
-  threshold           = 35
-  alarm_description   = "Trigger scale out when CPU < 35%"
-  dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.this.name
-  }
+# resource "aws_autoscaling_policy" "scale_up" {
+#   name                   = "simple-scale-up"
+#   policy_type            = "SimpleScaling"
+#   adjustment_type        = "ChangeInCapacity"
+#   autoscaling_group_name = aws_autoscaling_group.this.name
+#   #scaling_adjustment = "1"
+#   scaling_adjustment = var.scaling_adjustment_up
+#   cooldown = 300
+# }
 
-  alarm_actions = [aws_autoscaling_policy.scale_down.arn]
-}
+# resource "aws_autoscaling_policy" "scale_down" {
+#   name                   = "simple-scale-down"
+#   policy_type            = "SimpleScaling"
+#   adjustment_type        = "ChangeInCapacity"
+#   autoscaling_group_name = aws_autoscaling_group.this.name
+#   #scaling_adjustment = "-1"
+#   scaling_adjustment = var.scaling_adjustment_down
+#   cooldown = 300
+# }
+
+# resource "aws_cloudwatch_metric_alarm" "cpu_util_up" {
+#   alarm_name          = "cpu_util_up_${var.cpu_util_threshold_up}"
+#   comparison_operator = "GreaterThanThreshold"
+#   evaluation_periods  = 2
+#   metric_name         = "CPUUtilization"
+#   namespace           = "AWS/EC2"
+#   period              = 300
+#   statistic           = "Average"
+#   threshold           = var.cpu_util_threshold_up
+#   alarm_description   = "Trigger scale out when CPU > ${var.cpu_util_threshold_up}%"
+#   dimensions = {
+#     AutoScalingGroupName = aws_autoscaling_group.this.name
+#   }
+
+#   alarm_actions = [aws_autoscaling_policy.scale_up.arn]
+# }
+
+# resource "aws_cloudwatch_metric_alarm" "cpu_util_down" {
+#   alarm_name          = "cpu_util_down_${var.cpu_util_threshold_down}"
+#   comparison_operator = "LessThanThreshold"
+#   evaluation_periods  = 2
+#   metric_name         = "CPUUtilization"
+#   namespace           = "AWS/EC2"
+#   period              = 300
+#   statistic           = "Average"
+#   threshold           = "${var.cpu_util_threshold_down}"
+#   alarm_description   = "Trigger scale out when CPU < ${var.cpu_util_threshold_down}%"
+#   dimensions = {
+#     AutoScalingGroupName = aws_autoscaling_group.this.name
+#   }
+
+#   alarm_actions = [aws_autoscaling_policy.scale_down.arn]
+# }
