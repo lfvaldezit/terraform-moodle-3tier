@@ -40,15 +40,11 @@
 - Run `terraform init --upgrade`.
 - Run `terraform apply` to deploy the changes.
 
-## 📄 Auto Scaling module
-
-
-
 ## 🧪 Testing
 
 - Select the single instance in the `EC2 Auto Scaling Group (ASG)`.
 - Connect to it using AWS `Session Manager`.
-- Run the following `stress command` — a utility that generates artificial system load to test performance and scaling behavior. The Auto Scaling Group will detect the high CPU utilization and automatically launch a new EC2 instance based on the launch template.
+- Run the following `stress command` — a utility that generates artificial system load to test performance and scaling behavior. The Auto Scaling Group will detect the high CPU utilization and automatically launch EC2 instances based on the launch template and auto scaling policies.
 
 ```bash
 stress -c 2 -v -t 3000
