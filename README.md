@@ -4,8 +4,6 @@
 
 <img width="800" height="500" alt="image" src="https://raw.githubusercontent.com/lfvaldezit/terraform-moodle-3tier/main/image.png" />
 
-## 📦 Stack Overview
-
 * **VPC**: Isolated network for deploying AWS resources.
 * **NAT Gateway**: Enables outbound Internet access for private subnets securely.
 * **Internet Gateway**: Connects public subnets to the Internet.
@@ -19,34 +17,6 @@
 * **AWS Systems Manager Parameter Store**: It manages Moodle’s configuration parameters.
 * **AWS Certificate Manager**: Centralized and encrypted configuration storage.
 * **CloudFlare**: Manage DNS records for the domain.
-
-## 📁 Project Structure
-
-```
-
-├── .gitignore
-├── image.png              
-├── locals.tf       
-├── main.tf
-├── outputs.tf              
-├── providers.tf
-├── README.md
-├── terraform.example.tfvars 
-├── variables.tf
-├── version.tf                    
-└── modules/
-    └── auto-scaling/     
-    └── cloudflare/     
-    └── ec2/     
-    └── efs/     
-    └── elasticache/
-    └── load-balancer/
-    └── parameter-store/
-    └── rds/
-    └── security-group/
-    └── vpc/     
-
-```
 
 ## 🚀 Deployment
 
@@ -69,6 +39,10 @@
 - Run `terraform init --upgrade`.
 - Run `terraform apply` to deploy the changes.
 
+## 📄 Auto Scaling module
+
+
+
 ## 🧪 Testing
 
 - Select the single instance in the `EC2 Auto Scaling Group (ASG)`.
@@ -78,7 +52,34 @@
 ```bash
 stress -c 2 -v -t 3000
 ```
+
 ## ✅ Outputs
 
 - `RDS-ENDPOINT`: The hostname of the RDS instance.
 - `REDIS-ENDPOINT`: The hostname of the REDIS primary node.
+
+## 📁 Project Structure
+
+```
+├── locals.tf       
+├── main.tf
+├── outputs.tf              
+├── providers.tf
+├── README.md
+├── terraform.example.tfvars 
+├── variables.tf
+├── version.tf
+├── image.png 
+├── .gitignore                   
+└── modules/
+    └── auto-scaling/     
+    └── cloudflare/     
+    └── ec2/     
+    └── efs/     
+    └── elasticache/
+    └── load-balancer/
+    └── parameter-store/
+    └── rds/
+    └── security-group/
+    └── vpc/     
+```
