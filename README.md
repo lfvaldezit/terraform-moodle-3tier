@@ -18,6 +18,7 @@
 * **AWS Systems Manager Parameter Store**: It manages Moodle’s configuration parameters.
 * **AWS Certificate Manager**: Centralized and encrypted configuration storage.
 * **CloudFlare**: Manage DNS records for the domain.
+* **Parameter Store**: It manages Moodle’s configuration parameters.
 
 ## 🚀 Deployment
 
