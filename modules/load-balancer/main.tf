@@ -39,63 +39,84 @@ resource "aws_lb_listener" "this" {
 # --------------- Listener Rules  ----------------- #
 # https://docs.moodle.org/500/en/Apache#Load_Balancer_Hints_(AWS)
 
-resource "aws_lb_listener_rule" "rule-1" {
+# resource "aws_lb_listener_rule" "rule-1" {
 
+#   condition {
+#     path_pattern {
+#       values = ["*/.*", "*/upgrade.txt", "*/db/install.xml", "*/README.md", "*/composer.json"]
+#     }
+#   }
+
+#   action {
+#     type = "fixed-response"
+#     target_group_arn = aws_lb_target_group.this.arn
+#     fixed_response {
+#       status_code = 404
+#       content_type = "text/html"
+#       message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>" 
+#     }
+#   }
+
+#   listener_arn = aws_lb_listener.this.arn
+# }
+
+# resource "aws_lb_listener_rule" "rule-2" {
+
+#   condition {
+#     path_pattern {
+#       values = ["*/composer.json", "*/Gruntfile.js", "*.lock", "*/environtment.xml", "*/readme.txt"]
+#     }
+#   }
+
+#   action {
+#     type = "fixed-response"
+#     target_group_arn = aws_lb_target_group.this.arn
+#     fixed_response {
+#       status_code = 404
+#       content_type = "text/html"
+#       message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>" 
+#     }
+#   }
+
+#   listener_arn = aws_lb_listener.this.arn
+# }
+
+# resource "aws_lb_listener_rule" "rule-3" {
+
+#   condition {
+#     path_pattern {
+#       values = ["*/fixtures/*", "*/behat/*", "*/phpunit.xml", "*/health.html"]
+#     }
+#   }
+
+#   action {
+#     type = "fixed-response"
+#     target_group_arn = aws_lb_target_group.this.arn
+#     fixed_response {
+#       status_code = 404
+#       content_type = "text/html"
+#       message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>" 
+#     }
+#   }
+
+#   listener_arn = aws_lb_listener.this.arn
+# }
+
+resource "aws_lb_listener_rule" "this" {
+  count = length(var.listener_rule)
   condition {
     path_pattern {
-      values = ["*/.*", "*/upgrade.txt", "*/db/install.xml", "*/README.md", "*/composer.json"]
+      values = var.listener_rule[count.index].path_pattern
     }
   }
 
   action {
-    type = "fixed-response"
+    type = var.listener_rule[count.index].type
     target_group_arn = aws_lb_target_group.this.arn
     fixed_response {
-      status_code = 404
-      content_type = "text/html"
-      message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>" 
-    }
-  }
-
-  listener_arn = aws_lb_listener.this.arn
-}
-
-resource "aws_lb_listener_rule" "rule-2" {
-
-  condition {
-    path_pattern {
-      values = ["*/composer.json", "*/Gruntfile.js", "*.lock", "*/environtment.xml", "*/readme.txt"]
-    }
-  }
-
-  action {
-    type = "fixed-response"
-    target_group_arn = aws_lb_target_group.this.arn
-    fixed_response {
-      status_code = 404
-      content_type = "text/html"
-      message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>" 
-    }
-  }
-
-  listener_arn = aws_lb_listener.this.arn
-}
-
-resource "aws_lb_listener_rule" "rule-3" {
-
-  condition {
-    path_pattern {
-      values = ["*/fixtures/*", "*/behat/*", "*/phpunit.xml", "*/health.html"]
-    }
-  }
-
-  action {
-    type = "fixed-response"
-    target_group_arn = aws_lb_target_group.this.arn
-    fixed_response {
-      status_code = 404
-      content_type = "text/html"
-      message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>" 
+      status_code = var.listener_rule[count.index].status_code
+      content_type = var.listener_rule[count.index].content_type
+      message_body = var.listener_rule[count.index].message_body
     }
   }
 

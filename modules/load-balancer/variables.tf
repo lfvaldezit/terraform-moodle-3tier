@@ -41,8 +41,12 @@ variable "subnets_id" {
 # --------------- Listnere Rules  ----------------- #
 
 variable "listener_rule" {
+  description = "List of listener Rules"
   type = list(object({
-    path_pattern = string
-     
+    path_pattern = list(string)
+    type = string
+    status_code = number
+    content_type = string
+    message_body = string
   }))
 }
