@@ -6,6 +6,7 @@ name = "moodle-test"
 # --------------- VPC ----------------- #
 
 cidr_block = "192.168.0.0/16"
+
 public_subnets = [{ name = "moodle-test-sn-pub-A", cidr_block = "192.168.0.0/24", az = "us-east-1a" },
 { name = "moodle-test-sn-pub-B", cidr_block = "192.168.3.0/24", az = "us-east-1b" }]
 
@@ -49,11 +50,16 @@ min_size          = 1
 max_size          = 2
 desired_capacity  = 1
 
-cpu_util_threshold_up = 75
-scaling_adjustment_up = 1
+autoscaling_policy = [
+{ name = "simple-scale-up", scaling_adjustment = 1, cooldown = 300 },
+{ name = "simple-scale-down", scaling_adjustment = -1, cooldown = 300 }]
 
-cpu_util_threshold_down = 25
-scaling_adjustment_down = -1
+
+cloudwatch_metric_alarm = [
+{ name = "cpu-util-up-75%", threshold = 75, alarm_description = "Trigger scale out when CPU > 75%", 
+comparison_operator = "GreaterThanThreshold"},
+{ name = "cpu-util-up-25%", threshold = 25, alarm_description = "Trigger scale out when CPU < 25%", 
+comparison_operator = "LessThanThreshold"}]
 
 # --------------- Cloudflare ----------------- #
 
