@@ -108,6 +108,27 @@ comparison_operator = "LessThanThreshold"}]
 # If CPU Utilization > 75%. Scale up 1 (simple-scale-up)
 # If CPU utilization < 25% Scale down -1 (simple-scale-down)
 
+# https://docs.moodle.org/500/en/Apache#Load_Balancer_Hints_(AWS)
+
+listener_rule = [ 
+  {path_pattern = ["*/.*", "*/upgrade.txt", "*/db/install.xml", "*/README.md", "*/composer.json"],
+  type = "fixed-response",
+  status_code = 404,
+  content_type = "text/html",
+  message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>"}, 
+
+  {path_pattern = ["*/composer.json", "*/Gruntfile.js", "*.lock", "*/environtment.xml", "*/readme.txt"],
+  type = "fixed-response",
+  status_code = 404,
+  content_type = "text/html",
+  message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>"},
+  
+  {path_pattern = ["*/fixtures/*", "*/behat/*", "*/phpunit.xml", "*/health.html"],
+  type = "fixed-response",
+  status_code = 404,
+  content_type = "text/html",
+  message_body = "<html>\n<head><title>404 Not Found</title></head>\n<body>\n<center><h1>404 Not Found</h1></center>\n<hr>\n</body>\n</html>"}]
+
 # --------------- Cloudflare ----------------- #
 
 domain_name = "example.com"

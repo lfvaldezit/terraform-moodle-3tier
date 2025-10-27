@@ -1,17 +1,14 @@
 variable "name" {
-  description = "Name for all resources"
   type        = string
 }
 
 # --------------- VPC ----------------- #
 
 variable "cidr_block" {
-  description = "CIDR block for the VPC"
   type        = string
 }
 
 variable "public_subnets" {
-  description = "List of public subnets"
   type = list(object({
     name       = string
     cidr_block = string
@@ -20,7 +17,6 @@ variable "public_subnets" {
 }
 
 variable "app_subnets" {
-  description = "List of app subnets"
   type = list(object({
     name       = string
     cidr_block = string
@@ -29,7 +25,6 @@ variable "app_subnets" {
 }
 
 variable "data_subnets" {
-  description = "List of db subnets"
   type = list(object({
     name       = string
     cidr_block = string
@@ -121,10 +116,18 @@ variable "cloudwatch_metric_alarm" {
   }))
 }
 
+variable "listener_rule" {
+  type = list(object({
+    path_pattern = list(string)
+    type = string
+    status_code = number
+    content_type = string
+    message_body = string
+  }))
+}
 #--------------- CloudFlare --------------- #
 
 variable "api_token" {
-  description = "Generated API Token to access services and resources "
   type        = string
 }
 
