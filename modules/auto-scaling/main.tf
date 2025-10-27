@@ -46,7 +46,7 @@ resource "aws_autoscaling_group" "this" {
 # --------------- IAM ROLE ----------------- #
 
 resource "aws_iam_instance_profile" "this" {
-  name = "${var.name}-inst-profile"
+  name = "${var.name}-ec2-profile"
   role = aws_iam_role.this.name
 }
 
@@ -94,7 +94,7 @@ resource "aws_autoscaling_policy" "this" {
 resource "aws_cloudwatch_metric_alarm" "this" {
   count = length(var.cloudwatch_metric_alarm)
   alarm_name          = var.cloudwatch_metric_alarm[count.index].name
-  comparison_operator = "GreaterThanThreshold"
+  comparison_operator = var.cloudwatch_metric_alarm[count.index].comparison_operator
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"

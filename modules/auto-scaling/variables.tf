@@ -84,5 +84,6 @@ variable "cloudwatch_metric_alarm" {
       name = string
       threshold = number
       alarm_description = string 
+      comparison_operator = string
     }))
 }
