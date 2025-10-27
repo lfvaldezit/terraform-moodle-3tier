@@ -99,12 +99,14 @@ autoscaling_policy = [
 { name = "simple-scale-up", scaling_adjustment = 1, cooldown = 300 },
 { name = "simple-scale-down", scaling_adjustment = -1, cooldown = 300 }]
 
-
 cloudwatch_metric_alarm = [
 { name = "cpu-util-up-75%", threshold = 75, alarm_description = "Trigger scale out when CPU > 75%", 
 comparison_operator = "GreaterThanThreshold"},
 { name = "cpu-util-up-25%", threshold = 25, alarm_description = "Trigger scale out when CPU < 25%", 
 comparison_operator = "LessThanThreshold"}]
+
+# If CPU Utilization > 75%. Scale up 1 (simple-scale-up)
+# If CPU utilization < 25% Scale down -1 (simple-scale-down)
 
 # --------------- Cloudflare ----------------- #
 
