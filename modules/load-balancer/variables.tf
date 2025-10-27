@@ -11,10 +11,12 @@ variable "common_tags" {
 # --------------- Target Group  ----------------- #
 
 variable "vpc_id" {
+  description = "The VPC ID where the load balancer will be created"
   type = string
 }
 
 variable "health_check_path" {
+  description = "Health Check configuration"
   type = string
 }
 
@@ -34,4 +36,13 @@ variable "alb_secgrp_id" {
 variable "subnets_id" {
     description = "Subnets ID for th ALB"
     type = set(string)
+}
+
+# --------------- Listnere Rules  ----------------- #
+
+variable "listener_rule" {
+  type = list(object({
+    path_pattern = string
+     
+  }))
 }
