@@ -91,6 +91,36 @@ variable "health_check_path" {
   type = string
 }
 
+variable "min_size" {
+  type = string
+}
+
+variable "max_size" {
+  type = string
+}
+
+variable "desired_capacity" {
+  type = string
+}
+
+variable "autoscaling_policy" {
+  type = list(object({
+    name               = string
+    scaling_adjustment = number
+    cooldown           = number
+
+  }))
+}
+
+variable "cloudwatch_metric_alarm" {
+  type = list(object({
+    name              = string
+    threshold         = number
+    alarm_description = string
+    comparison_operator = string
+  }))
+}
+
 #--------------- CloudFlare --------------- #
 
 variable "api_token" {
