@@ -1,4 +1,6 @@
 
+#--------------- PHASE 1 ----------------- #
+
 module "engine" {
   source     = "./modules/parameter-store"
   param_name = "/${var.name}/engine"
@@ -67,18 +69,18 @@ module "redis" {
   param_name = "/${var.name}/REDIS"
   type       = "String"
   #value = module.redis-cache.cache_nodes[0].address
-  value      = module.redis-cache.primary_endpoint_address
+  value = module.redis-cache.primary_endpoint_address
 }
 
 module "vpc" {
-  source         = "./modules/vpc"
-  name           = "${var.name}-vpc"
-  cidr_block     = var.cidr_block
-  public_subnets = var.public_subnets
-  app_subnets    = var.app_subnets
-  data_subnets   = var.data_subnets
-  common_tags    = local.common_tags
-  region         = local.aws_region
+  source                      = "./modules/vpc"
+  name                        = "${var.name}-vpc"
+  cidr_block                  = var.cidr_block
+  public_subnets              = var.public_subnets
+  app_subnets                 = var.app_subnets
+  data_subnets                = var.data_subnets
+  common_tags                 = local.common_tags
+  region                      = local.aws_region
   endpoint_security_group_ids = [module.int_vpc_endpoint_sg.id]
 }
 
@@ -240,11 +242,12 @@ module "redis-cache" {
   subnet_ids         = module.vpc.sn_data_id
   common_tags        = local.common_tags
 }
+# comment out the module "ec2" block
 
 module "ec2" {
   depends_on         = [module.efs, module.rds, module.redis-cache]
   source             = "./modules/ec2"
-  ec2_name           = "${var.name}-web"
+  name           = "${var.name}-web"
   ami_id             = var.ami_id
   instance_type      = var.instance_type
   security_group_ids = [module.ec2_sg.id]
@@ -365,12 +368,12 @@ module "ec2" {
     EOF
 }
 
-#---------------  ----------------- #
+#--------------- PHASE 2 ----------------- #
 
 # module "hostname" {
 #   depends_on = [module.alb]
-#   source = "./modules/parameter-store"
-#   param_name       = "/${var.name}/hostname"
+#   source     = "./modules/parameter-store"
+#   param_name = "/${var.name}/hostname"
 #   type       = "String"
 #   value      = module.root.hostname
 # }
@@ -414,9 +417,11 @@ module "ec2" {
 #   launch_template_secgrp_id = [module.ec2_sg.id]
 #   subnets_id                = module.vpc.sn_app_id
 #   target_group_id           = module.alb.target_group_id
-#   min_size                  = 1
-#   max_size                  = 2
-#   desired_capacity          = 1
+#   min_size                  = var.min_size
+#   max_size                  = var.max_size
+#   desired_capacity          = var.desired_capacity
+#   autoscaling_policy        = var.autoscaling_policy
+#   cloudwatch_metric_alarm   = var.cloudwatch_metric_alarm
 #   common_tags               = local.common_tags
 #   user_data                 = <<-EOF
 #     #!/bin/bash -xe
