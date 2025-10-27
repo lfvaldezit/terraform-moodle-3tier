@@ -21,7 +21,7 @@ variable "launch_template_secgrp_id" {
 }
 
 variable "user_data" {
-    description = "User data for the instance"
+    description = "User data script for the instance"
     type = string
 }
 
