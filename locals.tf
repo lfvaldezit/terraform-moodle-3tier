@@ -6,5 +6,6 @@ locals {
     Owner       = "user"
     Environment = "test"
     ManagedBy   = "Terraform"
+    Project = "terraform-moodle-3tier"
   }
 }
