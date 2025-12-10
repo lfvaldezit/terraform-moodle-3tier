@@ -24,7 +24,7 @@
 
 ### PHASE 1
 
-- In the first phase of the `Moodle 3-tier architecture design`, we pre-provision a single EC2 instance using a user data script to automate the configuration process.
+- In the first phase of the `Moodle 3-tier architecture design`, we pre-provision a single EC2 instance using a user data script to automate the configuration process.   
 - Once the pre-provisioned EC2 instance is running, access the Moodle site at http://<PUBLIC_IP>/moodle to complete the installation.
 - Log in. Navigate to `Site Administration → Plugins → Caching → Configuration`.
 - Under ` Installed cache stores → Redis, click Add instance`.
